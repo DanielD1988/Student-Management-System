@@ -11,11 +11,14 @@ void subMenu2();
 
 int main() {
 
-	int option = 0 ,subOption = 0,grade = 0;
+	int option = 0 ,subOption = 0,grade = 0,stringCmpResult = 0;
 	std::string firstName,lastName,email,DOB;
 	long phoneNumber = 0;
 	std::vector <Student> myVector;
-	Student* student;
+	Student* student,*stu;
+	Courses* course = new Courses;
+	std::string checkForId;
+	std::string address;
 	bool isTrue = false;
 
 	while (option != 3) {
@@ -23,8 +26,9 @@ int main() {
 		std::cin >> option;
 		subOption = 0;//reset subOption variable 
 		if (option == 1) {
-
-			std::cout << "You choose 1" << std::endl;
+			std::cout << "\n\t\t\t\t\t\t_____________" << std::endl;
+			std::cout << "\t\t\t\t\t\tYou chose 1" << std::endl;
+			std::cout << "\t\t\t\t\t\t_____________" << std::endl;
 			while (subOption != 3) {
 				subMenu1();
 				std::cin >> subOption;
@@ -40,7 +44,9 @@ int main() {
 					std::cin >> DOB;
 					std::cout << "\nEnter email ";
 					std::cin >> email;
-
+					std::cin.ignore(1, '\n');
+					std::cout << "\nEnter address ";
+					std::getline(std::cin,address);
 					while (isTrue == false) {
 						std::cout << "\nEnter phone number ";
 						if (std::cin >> phoneNumber) {
@@ -66,13 +72,23 @@ int main() {
 							std::cout << "\n<<<You didn't enter a number>>>" << std::endl;
 						}
 					}
-					student = new Student(firstName,lastName,DOB,email,phoneNumber,grade);
+					student = new Student(firstName,lastName,DOB,email,address,phoneNumber,grade);
+					student->setCourseId();
 					myVector.push_back(*student);
 					break;
 				case 2:
 					if (!myVector.empty()) {
+						std::cout << "Enter student id ";
+						std::cin >> checkForId;
 						for (Student& x : myVector) {
-							x.printStudentDetails();
+							stringCmpResult = checkForId.compare(x.getCourseId());
+							if (stringCmpResult == 0) {
+								x.printStudentDetails();
+								break;
+							}
+						}
+						if (stringCmpResult != 0) {
+							std::cout << "No student id found" << std::endl;
 						}
 					}
 					else {
@@ -90,22 +106,38 @@ int main() {
 			}
 		}//end of if
 		else if (option == 2){
-			std::cout << "You choose 2" << std::endl;
+			std::cout << "\n\t\t\t\t\t\t_____________" << std::endl;
+			std::cout << "\t\t\t\t\t\tYou chose 2" << std::endl;
+			std::cout << "\t\t\t\t\t\t_____________" << std::endl;
 			while (subOption != 4) {
 				subMenu2();
 				std::cin >> subOption;
 
 				switch (subOption) {
 				case 1:
-					//Todo Course Details
+					stu = new Student();
+					stu->showSubjects();
 					break;
 				case 2:
-					//Todo View Grades
+					if (!myVector.empty()) {
+						std::cout << "Enter student id ";
+						std::cin >> checkForId;
+						for (Student& x : myVector) {
+							stringCmpResult = checkForId.compare(x.getCourseId());
+							if (stringCmpResult == 0) {
+								x.getGrades();
+								break;
+							}
+						}
+						if (stringCmpResult != 0) {
+							std::cout << "No student id found" << std::endl;
+						}
+					}
+					else {
+						std::cout << "No Student accounts" << std::endl;
+					}
 					break;
 				case 3:
-					//Enter Change Student Deatils
-					break;
-				case 4:
 					std::cout << "Exiting Student Menu\n" << std::endl;
 					break;
 				default:
@@ -124,8 +156,6 @@ int main() {
 			std::cout << "\n\t\t\t\t   ***You Didn't choose one of the options****\n" << std::endl;
 		}
 	}
-	
-
 	return 0;
 }
 
@@ -139,10 +169,10 @@ void mainMenu() {
 }
 
 void subMenu1() {
-	std::cout << "\t\t\t\t\t\t   --Faculty Menu--\n" << std::endl;
-	std::cout << "\t\t\t\t\t\tChoose one of the following\n" << std::endl;
+	std::cout << "\n\t\t\t\t\t\t--Faculty Menu--\n" << std::endl;
+	std::cout << "\t\t\t\t\t  Choose one of the following\n" << std::endl;
 	std::cout << "\t\t\t\t\t\t1 Create Student Account\n" << std::endl;
-	std::cout << "\t\t\t\t\t\t2 Search For Student\n" << std::endl;
+	std::cout << "\t\t\t\t\t\t2 Search For Students record\n" << std::endl;
 	std::cout << "\t\t\t\t\t\t3 To Return to Main Menu\n" << std::endl;
 	std::cout << "\t\t\t\t\t\t> ";
 }
@@ -152,7 +182,6 @@ void subMenu2() {
 	std::cout << "\t\t\t\t\t\tChoose one of the following\n" << std::endl;
 	std::cout << "\t\t\t\t\t\t1 Course Details\n" << std::endl;
 	std::cout << "\t\t\t\t\t\t2 View Grades\n" << std::endl;
-	std::cout << "\t\t\t\t\t\t3 Change Phone/Address\n" << std::endl;
 	std::cout << "\t\t\t\t\t\t4 To Return to Main Menu\n" << std::endl;
 	std::cout << "\t\t\t\t\t\t> ";
 }
