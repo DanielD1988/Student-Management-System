@@ -1,6 +1,6 @@
 # Student-Management-System
 
-A student management system created using C#.
+A student management system created using C++.
 
 The system consists of 3 menus:
 
