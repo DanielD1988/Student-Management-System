@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#ifndef Courses_HEADER
+#ifndef Courses_HEADER//Header Gaurd
 #define Courses_HEADER
 #include "Courses.h"
 

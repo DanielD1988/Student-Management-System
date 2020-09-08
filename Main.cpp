@@ -12,20 +12,18 @@ void subMenu2();
 int main() {
 
 	int option = 0 ,subOption = 0,grade = 0,stringCmpResult = 0;
-	std::string firstName,lastName,email,DOB;
+	std::string firstName,lastName,email,DOB,checkForId,address;
 	long phoneNumber = 0;
 	std::vector <Student> myVector;
 	Student* student,*stu;
 	Courses* course = new Courses;
-	std::string checkForId;
-	std::string address;
 	bool isTrue = false;
 
 	while (option != 3) {
 		mainMenu();
 		std::cin >> option;
 		subOption = 0;//reset subOption variable 
-		if (option == 1) {
+		if (option == 1) {//outer loop
 			std::cout << "\n\t\t\t\t\t\t_____________" << std::endl;
 			std::cout << "\t\t\t\t\t\tYou chose 1" << std::endl;
 			std::cout << "\t\t\t\t\t\t_____________" << std::endl;
@@ -47,19 +45,23 @@ int main() {
 					std::cin.ignore(1, '\n');
 					std::cout << "\nEnter address ";
 					std::getline(std::cin,address);
+					//Error checking for valid number
 					while (isTrue == false) {
 						std::cout << "\nEnter phone number ";
 						if (std::cin >> phoneNumber) {
 							isTrue = true;
 						}
 						else {
+							//Clear last input
 							std::cin.clear();
 							std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
 							isTrue = false;
 							std::cout << "\n<<<You didn't enter a number>>>" << std::endl;
 						}
 					}
 					isTrue = false;
+					//Error checking for valid number
 					while (isTrue == false) {
 						std::cout << "\nEnter students average grade ";
 						if (std::cin >> grade) {
@@ -73,17 +75,17 @@ int main() {
 						}
 					}
 					student = new Student(firstName,lastName,DOB,email,address,phoneNumber,grade);
-					student->setCourseId();
-					myVector.push_back(*student);
+					student->setCourseId();//Choose students course
+					myVector.push_back(*student);//Store created student in a list
 					break;
 				case 2:
-					if (!myVector.empty()) {
+					if (!myVector.empty()) {//if student list isn't empty
 						std::cout << "Enter student id ";
 						std::cin >> checkForId;
 						for (Student& x : myVector) {
 							stringCmpResult = checkForId.compare(x.getCourseId());
 							if (stringCmpResult == 0) {
-								x.printStudentDetails();
+								x.printStudentDetails();//print student details of student
 								break;
 							}
 						}
@@ -105,7 +107,7 @@ int main() {
 				}//end of faculty switch
 			}
 		}//end of if
-		else if (option == 2){
+		else if (option == 2){//outer loop
 			std::cout << "\n\t\t\t\t\t\t_____________" << std::endl;
 			std::cout << "\t\t\t\t\t\tYou chose 2" << std::endl;
 			std::cout << "\t\t\t\t\t\t_____________" << std::endl;
