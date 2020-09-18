@@ -47,4 +47,6 @@ void Student::printStudentDetails() {
 	std::cout << std::endl;
 }
 
-Student::~Student() {}
+Student::~Student() {
+	delete course;//delete pointer
+}

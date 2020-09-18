@@ -77,6 +77,7 @@ int main() {
 					student = new Student(firstName,lastName,DOB,email,address,phoneNumber,grade);
 					student->setCourseId();//Choose students course
 					myVector.push_back(*student);//Store created student in a list
+					delete student;//delete pointer
 					break;
 				case 2:
 					if (!myVector.empty()) {//if student list isn't empty
@@ -119,6 +120,7 @@ int main() {
 				case 1:
 					stu = new Student();
 					stu->showSubjects();
+					delete stu;//delete pointer
 					break;
 				case 2:
 					if (!myVector.empty()) {
@@ -158,6 +160,7 @@ int main() {
 			std::cout << "\n\t\t\t\t   ***You Didn't choose one of the options****\n" << std::endl;
 		}
 	}
+	delete course;//delete pointer
 	return 0;
 }
 
